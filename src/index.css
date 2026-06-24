@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+
+.label{
+    @apply w-[40vw] max-w-[150px];
+}
+
+.confirmButton{
+    @apply mx-auto w-[30vw] max-w-[200px] mt-5 p-2 bg-[#A0A0A0] rounded-md text-[white]
+}
+
+
+.overlay{
+    @apply fixed inset-0 bg-[black] opacity-70
+}
+
+.headerNotSelected{
+    @apply w-[15vw] min-h-screen  p-2 bg-[#D1D1D1] 
+}
+
+.header{
+    @apply min-w-[35vw] min-h-screen p-2 bg-[#D1D1D1]
+}
+
+.popUp{
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+}
+
+
+.backButton{
+    @apply max-w-[10vw] max-h-[10vh] mx-auto;
+}
