@@ -8,13 +8,15 @@ type ChooseMensality = {
     quantityInstallments?: number;
     totalPrice: number;
     token: string | undefined;
+    bankBilletType: string | undefined;
+    setActualPage:  Dispatch<SetStateAction<string | null>>;
 
     setSucess: Dispatch<SetStateAction<boolean | null>>;
     setMessage: Dispatch<SetStateAction<string>>;
 }
 
-export default function ChooseMensality({idCliente,  nameCLient,quantityInstallments, totalPrice, token , setSucess, setMessage} : ChooseMensality){
-
+export default function ChooseMensality({idCliente,  nameCLient,quantityInstallments, totalPrice, token , bankBilletType, setActualPage,  setSucess, setMessage} : ChooseMensality){
+    console.log(token);
     const [installment, setInstallment] = useState<number>(1);
     const mensality = [];
 
@@ -27,7 +29,6 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
     const priceInstallment = totalPrice/installment;
 
     const handlePricer = async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-
         const {value} = e.target;
         setInstallment(Number(value));
     }
@@ -39,15 +40,16 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
             idClient : idCliente,
             nameClient: nameCLient,
             priceInstallments: priceInstallment,
-            QuantityInstallments: quantityInstallments,
-            BankBilletType: ""
+            QuantityInstallments: installment,
+            BankBilletType: bankBilletType
         }
 
         if(token){
             makeContract(contractData, token)
-            .then((resp) => {
+            .then((resp : any) => {
                 setSucess(true);
-                setMessage(resp);
+                setMessage(resp?.message);
+                setActualPage("Simulation");
             });
         }
     }
@@ -77,7 +79,6 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
                         ))
                     )}
                 </select>
-
             </form>
 
             <p>

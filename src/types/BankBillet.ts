@@ -14,9 +14,14 @@ export type SimulationContract = {
     QuantityInstallments: number;
     idClient: number;
     nameClient: string;
-    statsClient: string;
+    BankBilletType: string;
+    statsClient: Stats[];
     taxes: number;
     price: number;
+}
+
+export type Stats = {
+    statsClient: string
 }
 
 export type DataContract = {

@@ -9,7 +9,6 @@
     @apply mx-auto w-[30vw] max-w-[200px] mt-5 p-2 bg-[#A0A0A0] rounded-md text-[white]
 }
 
-
 .overlay{
     @apply fixed inset-0 bg-[black] opacity-70
 }

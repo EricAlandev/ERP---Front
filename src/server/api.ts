@@ -27,7 +27,7 @@ export async function generateSucessPDF(bankBillet: BankBillet){
 }
 
 export async function makeContract(contract: DataContract, token: string){
-
+        console.log("Data contract", contract);
         return await fetch(`${BACKEND_URL}/contract/deal`, {
             method: "POST",
             headers: {
@@ -39,9 +39,7 @@ export async function makeContract(contract: DataContract, token: string){
         .then(async resp => {
             const response = await resp.json();
 
-            console.log(response);
-
-            return response;
+            return {message: "The installments was done!", data : response};
         })
         .catch(
             e => console.log(e)

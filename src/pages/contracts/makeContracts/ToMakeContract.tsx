@@ -37,6 +37,8 @@ export default function ToMakeContract({data, setActualPage, token , setSucess, 
                 quantityInstallments={data?.QuantityInstallments || 0}
                 totalPrice={totalPriceWithTaxes || 0}
                 token={token || undefined}
+                setActualPage={setActualPage}
+                bankBilletType={data?.BankBilletType}
 
                 setSucess={setSucess}
                 setMessage={setMessage}
