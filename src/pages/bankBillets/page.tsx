@@ -5,6 +5,7 @@ import Layout from "../../components/generals/Layout";
 import type { SearchUser } from "../../types/UserTypes";
 import { UserSearchFetch } from "../../server/ClientApi";
 import { useGlobalContext } from "../../server/context/GlobalContext";
+import RenderUsers from "./components/RenderUsers";
 
 
 export default function BankBilletPage(){
@@ -30,7 +31,7 @@ export default function BankBilletPage(){
         <Layout>
             {actualPage === SearchUserValue && (
                 <SearchPage
-                    send={SearchUsers}
+                    send={(seach) => {SearchUsers(seach)}}
                 />
             )}
         </Layout>

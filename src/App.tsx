@@ -1,13 +1,13 @@
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import SucessPage from './pages/payments/SucessPage'
 import Login from './pages/InAndOut/page'
 import RegisterPage from './pages/InAndOut/Register'
 import PageGiveBillets from './pages/contracts/page'
 import ProtectedRoute from './server/context/protectedRoute'
 import LoginRoute from './server/context/LoginRoute'
 import BankBilletPage from './pages/bankBillets/page'
+import UserSkeSearch from './pages/bankBillets/ske/UserSkeSearch'
 
 function App() {
 
@@ -26,6 +26,9 @@ function App() {
             {/*Contracts && billets */}
             <Route path='/generateBoleto' element={<BankBilletPage/>}/>
             <Route path='/giveBankBillets' element={<PageGiveBillets/>}/>
+
+            {/*User page */}
+            <Route path='/client/:id' element={<BankBilletPage/>}/>
           </Route>
       </Routes>
   )

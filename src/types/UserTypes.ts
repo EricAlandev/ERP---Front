@@ -8,7 +8,6 @@ export type UserType = {
 }
 
 export type SearchUser = {
-    email ?: string;
-    idUser ? : string;
-    contractType ?: string;
+    Email ?: string;
+    IdUser ? : string;
 }
