@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { MakeContract } from "../../types/BankBillet";
+import { LT, MT } from "../bankBillets/constants/PageBankBilletsValue";
 
 
 type GiveBoletos = { 
@@ -51,8 +52,8 @@ export default function GenerateCreditOptions({ send }: GiveBoletos) {
                             required
                         >
                             <option value="" disabled>Select a type...</option>
-                            <option value="LESS TAXES">Less Taxes</option>
-                            <option value="MORE TAXES">More Taxes</option>
+                            <option value={`${LT}`}>Less Taxes</option>
+                            <option value={`${MT}`}>More Taxes</option>
                         </select>
                     </div>
 

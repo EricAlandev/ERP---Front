@@ -16,7 +16,7 @@ type ChooseMensality = {
 }
 
 export default function ChooseMensality({idCliente,  nameCLient,quantityInstallments, totalPrice, token , bankBilletType, setActualPage,  setSucess, setMessage} : ChooseMensality){
-    console.log(token);
+
     const [installment, setInstallment] = useState<number>(1);
     const mensality = [];
 
@@ -45,12 +45,7 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
         }
 
         if(token){
-            makeContract(contractData, token)
-            .then((resp : any) => {
-                setSucess(true);
-                setMessage(resp?.message);
-                setActualPage("Simulation");
-            });
+            makeContract(contractData, token);
         }
     }
  

@@ -7,6 +7,7 @@ import RegisterPage from './pages/InAndOut/Register'
 import PageGiveBillets from './pages/contracts/page'
 import ProtectedRoute from './server/context/protectedRoute'
 import LoginRoute from './server/context/LoginRoute'
+import BankBilletPage from './pages/bankBillets/page'
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
             <Route path='/' element={<Navigate to="/giveBankBillets" replace/>}/>
 
             {/*Contracts && billets */}
-            <Route path='/generateBoleto' element={<SucessPage/>}/>
+            <Route path='/generateBoleto' element={<BankBilletPage/>}/>
             <Route path='/giveBankBillets' element={<PageGiveBillets/>}/>
           </Route>
       </Routes>

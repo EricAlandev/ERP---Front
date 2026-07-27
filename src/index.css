@@ -29,3 +29,15 @@
 .backButton{
     @apply max-w-[10vw] max-h-[10vh] mx-auto;
 }
+
+/* 
+    FORMS
+*/
+
+.inputTag{
+    @apply w-[22vw] p-2 bg-[#D0D0D0] rounded-md
+}
+
+.buttonSearch{
+    @apply p-2 bg-[#D0D0D0] max-h-[40px] rounded-md cursor-pointer
+}

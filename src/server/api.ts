@@ -37,9 +37,14 @@ export async function makeContract(contract: DataContract, token: string){
             body: JSON.stringify(contract)
         })
         .then(async resp => {
-            const response = await resp.json();
+            const blob = await resp.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
 
-            return {message: "The installments was done!", data : response};
+            window.open(
+                blobUrl, 
+                "BoletoPopup", 
+                "width=600,height=800,status=no,toolbar=no,menubar=no,location=no"
+            );
         })
         .catch(
             e => console.log(e)

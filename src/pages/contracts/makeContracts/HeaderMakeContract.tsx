@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Stats } from "../../../types/BankBillet";
 import PopUpClientInfo from "../popUp/PopUpClientInfo";
+import { SimulationValue } from "../constants/PageValues";
 
 type HeaderMakeContract = {
     setActualPage: any;
@@ -38,7 +39,7 @@ export default function HeaderMakeContract({setActualPage, name, stats, price} :
                     <img
                     src="/generals/Back.png"
                     onClick={() => {
-                        setActualPage("Simulation")
+                        setActualPage(SimulationValue)
                     }}
                     className="backButton cursor-pointer"
                     />

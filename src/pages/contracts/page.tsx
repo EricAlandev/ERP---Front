@@ -5,10 +5,11 @@ import { useGlobalContext } from "../../server/context/GlobalContext";
 import type { dataForSimulationContract, SimulationContract } from "../../types/BankBillet";
 import GenerateCreditOptions from "./GenerateCreditOptions";
 import ToMakeContract from "./makeContracts/ToMakeContract";
+import { Contract, SimulationValue } from "./constants/PageValues";
 
 export default function PageGiveBillets(){
 
-    const [actualPage, setActualPage] = useState<string>("Simulation");
+    const [actualPage, setActualPage] = useState<string>(SimulationValue);
     const [simulationData, setSimulationData] = useState<SimulationContract | null>(null);
     const [sucess, setSucess] = useState<boolean | null>(false);
     const [message, setMessage] = useState<string>("");
@@ -20,13 +21,13 @@ export default function PageGiveBillets(){
             const dataSimulation = await makeSimulation(data, token);
 
             setSimulationData(dataSimulation);
-            setActualPage("Contract");
+            setActualPage(Contract);
         }
     }
 
     return(
         <Layout>
-            {actualPage === "Simulation" && (
+            {actualPage === SimulationValue && (
                 <GenerateCreditOptions
                     send={(data) => {
                         Simulation(data)
@@ -34,7 +35,7 @@ export default function PageGiveBillets(){
                 />
             )}
 
-            {actualPage === "Contract" && (
+            {actualPage === Contract && (
                 <ToMakeContract
                     token={token}
                     data={simulationData || null}

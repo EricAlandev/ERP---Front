@@ -6,3 +6,9 @@ export type UserType = {
     birthday ?: string;
     token?: string;
 }
+
+export type SearchUser = {
+    email ?: string;
+    idUser ? : string;
+    contractType ?: string;
+}

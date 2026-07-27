@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { generateSucessPDF } from "../../server/api";
 import type { BankBillet } from "../../types/BankBillet";
-import Header from "../../components/generals/Header";
+import Layout from "../../components/generals/Layout";
 
 export default function SucessPage(){
 
@@ -19,19 +19,7 @@ export default function SucessPage(){
     }
 
     return(
-        <div className="flex gap-5">
-            <Header
-                click={(open) => {
-                    if(open === true){
-                        setOpenHeader(true);
-                    }
-
-                    else{
-                        setOpenHeader(false);
-                    }
-                }}
-            />
-            
+        <Layout>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -86,6 +74,6 @@ export default function SucessPage(){
                     Generate Pdf
                 </button>
             </form>
-        </div>
+        </Layout>
     )
 }
