@@ -7,11 +7,10 @@ import { UserSearchFetch } from "../../server/ClientApi";
 import { useGlobalContext } from "../../server/context/GlobalContext";
 import RenderUsers from "./components/RenderUsers";
 
-
 export default function BankBilletPage(){
 
     const [actualPage, setActualPage] = useState<string>(SearchUserValue);
-    const [clients, setCLients] = useState<SearchUser[]>([]);
+    const [clients, setClients] = useState<SearchUser[]>([]);
 
     const {token} = useGlobalContext();
 
@@ -21,18 +20,21 @@ export default function BankBilletPage(){
         }
 
         const clientsSearch : SearchUser[] = await UserSearchFetch(data, token);
-        
-        if(clientsSearch.length > 0){
-            setCLients(clientsSearch);
-        }
+        setClients(clientsSearch);  
     }
 
     return(
         <Layout>
             {actualPage === SearchUserValue && (
-                <SearchPage
-                    send={(seach) => {SearchUsers(seach)}}
-                />
+                <div className="flex flex-col">
+                    <SearchPage
+                        send={(seach) => {SearchUsers(seach)}}
+                    />
+
+                    <RenderUsers
+                        users={clients}
+                    />
+                </div>
             )}
         </Layout>
     )

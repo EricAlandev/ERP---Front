@@ -12,7 +12,9 @@ export default function Layout({children} : Layout){
             className="flex gap-5"
         >
             <Header/>
-            {children}
+            <div>
+                {children}
+            </div>
         </div>
     )
 }

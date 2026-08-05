@@ -41,3 +41,23 @@
 .buttonSearch{
     @apply p-2 bg-[#D0D0D0] max-h-[40px] rounded-md cursor-pointer
 }
+
+/*
+    Contract props
+*/
+
+.blockBigProp{
+    @apply flex mt-5 text-center;
+}
+
+.blockSmallProp{
+    @apply flex mt-1 cursor-pointer border-[2px];
+}
+
+.contractProp{
+    @apply w-max h-auto min-w-[160px] max-w-[160px] h-auto p-2 bg-[black] text-[white] ;
+}
+
+.contractValue{
+    @apply h-auto min-w-[160px] max-w-[160px] p-2 bg-[white] text-[black];
+}

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom"
 import type { SearchUser } from "../../../types/UserTypes"
 import UserSkeSearch from "../ske/UserSkeSearch"
 
-
 type RenderUsers = {
     users: SearchUser[]
 }
@@ -19,13 +18,19 @@ export default function RenderUsers({users} : RenderUsers){
 
     return(
         <>
-            {users?.length > 0 && (
+            {users?.length > 0 ? (
                 users.map((u) => (
-                    <UserSkeSearch
+                    <UserSkeSearch  
+                        key={u.IdUser}
                         IdUser={u.IdUser}
+                        Email={u?.Email}
                         click={() => EnterUsePage(u?.IdUser)}
                     />
                 ))
+            ) : (
+                <p>
+                    Any result to your research
+                </p>
             )}
         </>
     )

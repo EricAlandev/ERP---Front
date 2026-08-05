@@ -7,7 +7,8 @@ import PageGiveBillets from './pages/contracts/page'
 import ProtectedRoute from './server/context/protectedRoute'
 import LoginRoute from './server/context/LoginRoute'
 import BankBilletPage from './pages/bankBillets/page'
-import UserSkeSearch from './pages/bankBillets/ske/UserSkeSearch'
+import ClientDetailPage from './pages/ClientDetailPage/contractsPage/page'
+import InstallmentsPage from './pages/ClientDetailPage/InstallmentsPage/page'
 
 function App() {
 
@@ -28,7 +29,8 @@ function App() {
             <Route path='/giveBankBillets' element={<PageGiveBillets/>}/>
 
             {/*User page */}
-            <Route path='/client/:id' element={<BankBilletPage/>}/>
+            <Route path='/client/:id' element={<ClientDetailPage/>}/>
+            <Route path='/client/:id/contract/:idContract' element={<InstallmentsPage/>}/>
           </Route>
       </Routes>
   )
