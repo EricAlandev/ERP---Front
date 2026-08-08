@@ -1,6 +1,8 @@
 import {useState, type Dispatch, type SetStateAction } from "react";
 import { makeContract } from "../../../server/api";
 import type { DataContract } from "../../../types/BankBillet";
+import {InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
 
 type ChooseMensality = {
     idCliente?: number;
@@ -56,9 +58,11 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
                 onSubmit={handleSubmit}
                 className="flex flex-col"
             >
-                <label htmlFor="istallmente">Quantity Installments</label>
+                <InputLabel id="istallmente" sx={{mt: '10px'}}>
+                    Quantity Installments
+                </InputLabel>
 
-                <select
+                <Select
                     id="istallmente"
                     name="installment"
                     value={installment}
@@ -66,27 +70,21 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
                 >
                     {mensality.length > 0 && (
                         mensality.map((iNumber) => (
-                            <option
+                            <MenuItem
                                 value={iNumber}
                             >
                                 {iNumber}x
-                            </option>
+                            </MenuItem>
                         ))
                     )}
-                </select>
+                </Select>
             </form>
 
-            <p>
+            <Typography style={{marginTop: '10px'}}>
                 {installment} installments of R$ {priceInstallment.toFixed(2)}
-            </p>
+            </Typography>
 
-            <button
-                type="submit"
-                form="Form"
-                className="confirmButton"
-            >
-                    Make a Deal
-            </button>
+            <BlackButton text="Make a Deal"/>
         </>
     )
 }

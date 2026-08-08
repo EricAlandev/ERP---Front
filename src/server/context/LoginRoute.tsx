@@ -12,7 +12,7 @@ export default function LoginRoute(){
     }
 
     if(token && !loading){
-        navigate("/giveBankBillets");
+        navigate("/makeContracts");
     }
 
     return <Outlet/>

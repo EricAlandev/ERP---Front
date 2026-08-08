@@ -1,3 +1,4 @@
+import { Box, Grid, Typography } from "@mui/material";
 import type { Integrity } from "../../../../types/UserTypes";
 
 type HeaderClientDetails = {
@@ -7,34 +8,39 @@ type HeaderClientDetails = {
     integritys : Integrity[]; 
 }
 
-export default function HeaderClientDetails({id, email, birthday, integritys}: HeaderClientDetails){
+export default function HeaderClientDetails({email, birthday, integritys}: HeaderClientDetails){
 
     return(
-        <div>
-            <h1 className="mt-5 text-center">
+        <Box>
+            <Typography
+                style={{
+                    marginTop: '15px',
+                    textAlign: 'center'
+                }}
+            >
                 Client Details:
-            </h1>
+            </Typography>
 
-            <div className="flex gap-5 mt-5">
-                <h2>
+            <Box>
+                <Typography>
                     Name: {email}
-                </h2>
+                </Typography>
 
-                <h2>
+                <Typography>
                     Birthday: {birthday}
-                </h2>
+                </Typography>
 
                 {integritys?.length > 0 && (
-                    <div className="flex flex-col">
-                        <h2>Integrity</h2>
+                    <Grid container spacing={1} sx={{width: '40vw'}}>
+                        <Typography>Integrity</Typography>
                         {integritys.map((i) => (
-                            <p>
+                            <Typography>
                                 {i.integrity}
-                            </p>
+                            </Typography>
                         ))}
-                    </div>
+                    </Grid>
                 )}
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }

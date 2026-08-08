@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import type { MakeContract } from "../../types/BankBillet";
+import type { dataForSimulationContract } from "../../types/BankBillet";
 import { LT, MT } from "../bankBillets/constants/PageBankBilletsValue";
+import {Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 
 type GiveBoletos = { 
-    send: (contract: MakeContract) => void;
+    send: (contract: dataForSimulationContract) => void;
 }
 
 export default function GenerateCreditOptions({ send }: GiveBoletos) {
 
-    const [contrat, setContrat] = useState<MakeContract>({
+    const [contrat, setContrat] = useState<dataForSimulationContract>({
         idClient: "", 
         bankBilletType: "", 
         price: "",
@@ -17,7 +18,7 @@ export default function GenerateCreditOptions({ send }: GiveBoletos) {
     
     const handleChanger = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setContrat((c) => ({
+        setContrat((c : dataForSimulationContract) => ({
             ...c, 
             [name]: value
         }));
@@ -30,50 +31,60 @@ export default function GenerateCreditOptions({ send }: GiveBoletos) {
                     e.preventDefault();
                     send(contrat);
                 }}
+                className="mt-10"
             >
-                <label htmlFor="idClient">Id Client</label>
-                <input
-                    id="idClient"
-                    name="idClient" 
-                    value={contrat.idClient} 
-                    onChange={handleChanger}
-                    type="text"
-                    required
-                />
+                    <TextField
+                        id="idClient"
+                        label="id Conta"
+                        name="idClient" 
+                        value={contrat.idClient} 
+                        onChange={handleChanger}
+                        type="text"
+                        required
+                    />
 
-                <fieldset className="flex flex-col">
-                    <div>
-                        <label htmlFor="bankBilletType">Boleto types</label>
-                        <select 
-                            id="bankBilletType"
-                            name="bankBilletType" 
-                            value={contrat.bankBilletType} 
-                            onChange={handleChanger}
-                            required
-                        >
-                            <option value="" disabled>Select a type...</option>
-                            <option value={`${LT}`}>Less Taxes</option>
-                            <option value={`${MT}`}>More Taxes</option>
-                        </select>
-                    </div>
+                    <InputLabel id="bankBilletType">Boleto types</InputLabel>
 
-                    <div>
-                        <label htmlFor="price">Total Price</label>
-                        <input
-                            id="price"
-                            name="price" 
-                            value={contrat.price} 
-                            onChange={handleChanger}
-                            type="number"
-                            step="0.01"
-                            required
-                        />
-                    </div>
-                </fieldset>
+                    <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px'}}>
+                        <Grid size={{xs: 6, md:6}}>
+                            <Select 
+                                id="bankBilletType"
+                                name="bankBilletType" 
+                                value={contrat.bankBilletType} 
+                                onChange={handleChanger}
+                                fullWidth
+                                required
+                            >
+                                    <MenuItem value="">Select a type...</MenuItem>
+                                    <MenuItem value={`${LT}`}>Less Taxes</MenuItem>
+                                    <MenuItem value={`${MT}`}>More Taxes</MenuItem>
+                            </Select>
+                        </Grid>
 
-                <button className="confirmButton" type="submit">
-                    Create
-                </button>
+                        <Grid size={{xs:6, md:6}}>
+                            <TextField
+                                id="price"
+                                name="price"
+                                label="Total Price"
+                                value={contrat.price}
+                                onChange={handleChanger}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                    </Grid>
+
+                    <Button 
+                        variant="contained" 
+                        sx={{
+                            mt: '20px',
+                            color: 'white',
+                            backgroundColor: 'black'
+                        }}
+                        type="submit"
+                    >
+                        Create
+                    </Button>
             </form>
         </>
     );

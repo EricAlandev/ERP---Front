@@ -85,7 +85,7 @@ export default function Header(){
 
                                     <li>
                                         <Link
-                                            to={"/giveBankBillets"}
+                                            to={"/makeContracts"}
                                         >
                                             Give Bank Billets
                                         </Link>

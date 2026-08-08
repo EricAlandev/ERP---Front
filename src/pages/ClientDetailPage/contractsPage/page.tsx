@@ -7,7 +7,6 @@ import { ClientDetails } from "../../../server/ClientApi";
 import HeaderClientDetails from "./components/HeaderClientDetails";
 import RenderContracts from "./components/RenderContracts";
 
-
 export default function ClientDetailPage(){
     const [userD, setUserD] = useState<UserContractsDetails | null>(null);
 

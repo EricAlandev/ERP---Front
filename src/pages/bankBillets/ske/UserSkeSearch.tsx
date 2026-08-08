@@ -1,20 +1,35 @@
+import {Grid, Typography } from "@mui/material";
 import type { SearchUser } from "../../../types/UserTypes";
 
 type UserSkeSearch = SearchUser & {
     click: () => void;
 }
 
-
 export default function UserSkeSearch({Email, click} : UserSkeSearch){
 
     return(
-        <div
+        <Grid
+            container 
+            spacing={2}
+            sx={{width: '100vw', maxWidth: '400px'}}
             onClick={click}
-            className=" mt-3 p-2 border-[#A0A0A0] border-[2px] cursor-pointer rounded-md"
         >
-            <h2 className="font-[900]">
-                {Email}
-            </h2>
-        </div>
+            <Grid sx={{sm:12, md: 12}}>
+                <Typography
+                    style={{
+                        width: '100vw',
+                        maxWidth: '400px',
+                        marginTop: '10px',
+                        padding: '10px',
+                        border: '2px, solid',
+                        borderColor: '#A0A0A0',
+                        borderRadius: '8px',
+                        cursor: 'pointer'
+                    }}
+                >
+                    {Email}
+                </Typography>
+            </Grid>
+        </Grid>
     )
 }

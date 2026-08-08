@@ -6,6 +6,7 @@ import type { SearchUser } from "../../types/UserTypes";
 import { UserSearchFetch } from "../../server/ClientApi";
 import { useGlobalContext } from "../../server/context/GlobalContext";
 import RenderUsers from "./components/RenderUsers";
+import { Box } from "@mui/material";
 
 export default function BankBilletPage(){
 
@@ -26,7 +27,12 @@ export default function BankBilletPage(){
     return(
         <Layout>
             {actualPage === SearchUserValue && (
-                <div className="flex flex-col">
+                <Box
+                    sx={{
+                        display : 'flex',
+                        flexDirection: 'column'
+                    }}
+                 >
                     <SearchPage
                         send={(seach) => {SearchUsers(seach)}}
                     />
@@ -34,7 +40,7 @@ export default function BankBilletPage(){
                     <RenderUsers
                         users={clients}
                     />
-                </div>
+                </Box>
             )}
         </Layout>
     )

@@ -1,3 +1,4 @@
+import { Box, Grid, Typography } from "@mui/material";
 import type { Stats } from "../../../types/BankBillet"
 
 type PopUpClientInfo = {
@@ -25,36 +26,50 @@ export default function PopUpClientInfo({name, stats, closePopUp} : PopUpClientI
     return(
         <>
             {/*Overlay */}
-            <div onClick={closePopUp}  className="fixed inset-0 bg-black opacity-70"></div>
+            <Box onClick={closePopUp}  className="fixed inset-0 bg-black opacity-70"></Box>
 
             {/*PopUp */}
-            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[30vh] bg-[white] rounded-md">
+            <Box
+                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[30vh] bg-[white] rounded-md"
+            >
 
                 {/*Header */}
-                <div className="w-full flex justify-end">
-                    <img
+                <Box
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'end',
+                        width: 'full'
+                    }}
+                >
+                    <Box
+                        component="img"
                         src="/generals/Back.png"
                         onClick={closePopUp}
-                        className="mt-1.5 mr-1.5 cursor-pointer"
+                        sx={{
+                            mt:'5px',
+                            mr: '6px',
+                            cursor: 'pointer'
+                        }}
                     />
-                </div>
+                </Box>
 
                 {/*Tittle */}
-                <h2 className="text-center">Informations Client</h2>
+                <Typography className="text-center">Informations Client</Typography>
 
                 {/*body of the popUp*/}
-                <div className="w-[40vw] mx-auto mt-2.5 text-[15px]">
-                    <div className="flex gap-2">
-                        <h3>Client Name:</h3>
-                        <h3>{name}</h3>
-                    </div>
+                <Box className="w-[40vw] mx-auto mt-2.5 text-[15px]">
+                    <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px'}}>
+                        <Typography>Client Name:</Typography>
+                        <Typography>{name}</Typography>
+                    </Grid>
 
-                    <div className="flex gap-2">
-                        <h3>Client Stats:</h3>
-                        <h3>[{Stats}]</h3>
-                    </div>
-                </div>
-            </div>
+                    <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px'}}>
+                            <Typography>Client Stats:</Typography>
+                                           
+                            <Typography>[{Stats}]</Typography>
+                    </Grid>
+                </Box>
+            </Box>
         </>
     )
 }

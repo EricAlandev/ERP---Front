@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Stats } from "../../../types/BankBillet";
 import PopUpClientInfo from "../popUp/PopUpClientInfo";
 import { SimulationValue } from "../constants/PageValues";
+import { Box, Button, Grid, Typography } from "@mui/material";
 
 type HeaderMakeContract = {
     setActualPage: any;
@@ -19,40 +20,64 @@ export default function HeaderMakeContract({setActualPage, name, stats, price} :
     }
 
     return(
-            <div>
-                <div className="flex items-center gap-2">
-                    <h1 className="text-center">
-                        Simulation Values
-                    </h1>
-
-                    <button
-                        onClick={handlePopUp}
-                        className="cursor-pointer"
-                    >
-                        CLient Informations
-                    </button>
-                </div>
-                
-                <div
-                    className="flex items-center"
-                >
-                    <img
+            <Box>
+                <Box
+                    component="img"
                     src="/generals/Back.png"
                     onClick={() => {
                         setActualPage(SimulationValue)
                     }}
                     className="backButton cursor-pointer"
-                    />
+                />
 
-                    <div
-                        className="flex flex-col"
-                    >
-                        <h2>{name}</h2>
+                <Grid container sx={{
+                    display: 'flex',
+                    width: '100%', 
+                    maxWidth : '600px'
+                }}
+                >
+                       <Grid
+                            size={{sm: 8, md: 8}}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginTop: '10px',
+                                gap: '20px'
+                            }}
+                       >
+                            <Typography>
+                                Simulation Values
+                            </Typography>
+                       </Grid>
 
-                        <h3>Loan of {price}</h3>
-                    </div>
-                </div>
+                        <Grid
+                            size={{sm: 4, md: 4}}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginTop: '10px',
+                                gap: '20px'
+                            }}
+                        >
+                            <Button
+                                variant="contained"
+                                onClick={handlePopUp}
+                                sx={{
+                                    minWidth: '120px',
+                                    ml: '20px',
+                                    color: 'white',
+                                    backgroundColor: 'black'
+                                }}
+                            >
+                                CLient Info
+                            </Button>
+                        </Grid>
+                </Grid>
 
+                <Typography sx={{mt: '2px'}}>
+                    Client: {name}
+                </Typography>
+         
                 {openPopUp && (
                     <PopUpClientInfo 
                         name={name} 
@@ -60,6 +85,6 @@ export default function HeaderMakeContract({setActualPage, name, stats, price} :
                         closePopUp={handlePopUp}
                     />
                 )}
-            </div>
+            </Box>
     )
 }

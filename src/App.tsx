@@ -22,11 +22,11 @@ function App() {
 
           {/*Private Routes */}
           <Route element={<ProtectedRoute/>}>
-            <Route path='/' element={<Navigate to="/giveBankBillets" replace/>}/>
+            <Route path='/' element={<Navigate to="/makeContracts" replace/>}/>
 
             {/*Contracts && billets */}
             <Route path='/generateBoleto' element={<BankBilletPage/>}/>
-            <Route path='/giveBankBillets' element={<PageGiveBillets/>}/>
+            <Route path='/makeContracts' element={<PageGiveBillets/>}/>
 
             {/*User page */}
             <Route path='/client/:id' element={<ClientDetailPage/>}/>

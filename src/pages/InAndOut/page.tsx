@@ -17,7 +17,7 @@ export default function Login(){
                     send={async (data) => {
                         const loginResp : UserType = await loginUser(data);
                         login(loginResp);
-                        navigate("/giveBankBillets")
+                        navigate("/makeContracts")
                     }}
             />
         </Layout>
