@@ -1,5 +1,7 @@
 import { useState } from "react"
 import type { UserType } from "../../types/UserTypes";
+import { Box, FormLabel, InputLabel, TextField } from "@mui/material";
+import BlackButton from "../generals/tsxComponents/ButtonButton";
 
 
 type RegisterForm = {
@@ -15,52 +17,53 @@ export default function RegisterForm({send} : RegisterForm){
         setUserData((e) => (
            { ...e, [name] : value}
         ))
-
-        console.log(userData);
     }
 
     return(
-        <div className="flex flex-col">
-            <h2 className="text-center">Register</h2>
+        <Box>
+            <InputLabel
+                sx={{
+                    mt: '10px',
+                    textAlign: 'center'
+                }}
+            >
+                Register
+            </InputLabel>
 
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
                     send(userData);
                 }}
-                className="flex flex-col"
+                className="flex flex-col gap-2"
             >
-                <label>Email</label>
-                <input
-                    type="email"
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <TextField
+                    id="email"
                     name="email"
                     value={userData.email}
                     onChange={handleChanger}
                 />
 
-                <label>Password</label>
-                <input
-                    type="password"
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <TextField
+                    id="password"
                     name="password"
                     value={userData.password}
                     onChange={handleChanger}
                 />
 
-                <label>BirthDay</label>
-                <input
+                <FormLabel htmlFor="date">BirthDay</FormLabel>
+                <TextField
+                    id="date"
                     type="date"
                     name="birthday"
                     value={userData.birthday}
                     onChange={handleChanger}
                 />
 
-                <button
-                    type="submit"
-                    className="confirmButton"
-                >
-                    Send
-                </button>
+                <BlackButton text="Send"/>
             </form>
-        </div>
+        </Box>
     )
 }

@@ -1,5 +1,6 @@
-import { Box, Grid, Typography } from "@mui/material";
-
+import { Box, Grid } from "@mui/material";
+import TypographyBottom from "../../../components/generals/tsxComponents/headerItens/TypographyBottom";
+import Image from "../../../components/generals/tsxComponents/headerItens/Image";
 
 type ContractBankBilletCombo = {
     id: number;
@@ -14,36 +15,22 @@ export default function ContractBankBilletCombo({id, name, date} : ContractBankB
             <Grid 
                 container 
                 spacing={2} 
-                sx={{width: '100vw', maxWidth: '420px', marginTop: '10px'}}
+                sx={{width: '100vw', maxWidth: '470px', marginTop: '10px'}}
             >
                 <Grid size={{sm:3, md:3}}>
-                    <Typography className="contractValue">
-                        {id}
-                    </Typography>
+                    <TypographyBottom text={`${id}`}/>
                 </Grid>
 
                 <Grid size={{sm:3, md:3}}>
-                    <Typography className="contractValue">
-                        {name}
-                    </Typography>
+                    <TypographyBottom text={`${name}`}/>
                 </Grid>
 
                 <Grid size={{sm:3, md:3}}>
-                        <Typography className="contractValue">
-                            19/03/2027
-                        </Typography>
+                    <TypographyBottom text={`19/03/2027`}/>
                 </Grid>
 
                 <Grid size={{sm:3, md:3}}>
-                    <Box
-                        component="img"
-                        src="/generals/Back.png"
-                        style={{
-                            display: 'flex',
-                            justifySelf: 'center',
-                            cursor: 'pointer'
-                        }}
-                    />
+                    <Image/>
                 </Grid>
             </Grid>
         </Box>

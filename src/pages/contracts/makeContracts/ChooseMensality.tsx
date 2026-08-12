@@ -84,7 +84,10 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
                 {installment} installments of R$ {priceInstallment.toFixed(2)}
             </Typography>
 
-            <BlackButton text="Make a Deal"/>
+            <BlackButton 
+                valueOnClick={handleSubmit} 
+                text="Make a Deal"
+            />
         </>
     )
 }

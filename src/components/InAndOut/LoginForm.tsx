@@ -1,5 +1,7 @@
 import { useState } from "react";
 import type { UserType } from "../../types/UserTypes";
+import {InputLabel, TextField } from "@mui/material";
+import BlackButton from "../generals/tsxComponents/ButtonButton";
 
 type LoginForm = {
     send: (data: UserType) => void;
@@ -27,27 +29,25 @@ export default function LoginForm({send} : LoginForm){
                 }}
                 className="flex flex-col"
             >
-                <label>Email</label>
-                <input
-                    type="email"
+                <InputLabel id="email">Email</InputLabel>
+
+                <TextField
+                    id="email"
                     name="email"
                     value={userData.email}
                     onChange={handleChanger}
                 />
 
-                <label>Password</label>
-                <input
-                    type="password"
+                <InputLabel id="email">Password</InputLabel>
+   
+                <TextField
+                    id="password"
                     name="password"
                     value={userData.password}
                     onChange={handleChanger}
                 />
 
-                <button
-                    className="confirmButton"
-                >
-                    Send
-                </button>
+                <BlackButton text="Send"/>
             </form>
         </>
     )

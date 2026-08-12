@@ -13,9 +13,10 @@ export default function TypographyTop({text} : TypographyTop){
                 sx={{
                     padding: '6px',
                     color: 'white',
-                    fontSize: '15px',
+                    fontSize: '14px',
                     textAlign: 'center',
-                    backgroundColor: 'black'
+                    backgroundColor: 'black',
+                    minHeight: "55px"
                 }}
             >
                 {text}
