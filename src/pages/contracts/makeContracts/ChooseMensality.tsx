@@ -1,5 +1,5 @@
 import {useState, type Dispatch, type SetStateAction } from "react";
-import { makeContract } from "../../../server/api";
+import { makeContract, pdfContract } from "../../../server/api";
 import type { DataContract } from "../../../types/BankBillet";
 import {InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
@@ -47,7 +47,8 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
         }
 
         if(token){
-            makeContract(contractData, token);
+            const idContract = await makeContract(contractData, token);
+            await pdfContract(idContract, token);
         }
     }
  

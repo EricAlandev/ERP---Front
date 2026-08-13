@@ -1,30 +1,6 @@
-import type { BankBillet, DataContract, dataForSimulationContract } from "../types/BankBillet";
+import type {DataContract, dataForSimulationContract } from "../types/BankBillet";
 
 export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
-
-export async function generateSucessPDF(bankBillet: BankBillet){
-
-        return await fetch(`${BACKEND_URL}/boleto`, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(bankBillet)
-        })
-        .then(async resp => {
-            const blob = await resp.blob();
-            const blobUrl = window.URL.createObjectURL(blob);
-
-            window.open(
-                blobUrl, 
-                "BoletoPopup", 
-                "width=600,height=800,status=no,toolbar=no,menubar=no,location=no"
-            );
-        })
-        .catch(
-            e => console.log(e)
-        );
-}
 
 export async function makeContract(contract: DataContract, token: string){
         console.log("Data contract", contract);
@@ -37,14 +13,10 @@ export async function makeContract(contract: DataContract, token: string){
             body: JSON.stringify(contract)
         })
         .then(async resp => {
-            const blob = await resp.blob();
-            const blobUrl = window.URL.createObjectURL(blob);
+            
+            const response : any = resp.json();
 
-            window.open(
-                blobUrl, 
-                "BoletoPopup", 
-                "width=600,height=800,status=no,toolbar=no,menubar=no,location=no"
-            );
+            return {idContract: response.idContract};
         })
         .catch(
             e => console.log(e)
@@ -69,4 +41,24 @@ export async function makeSimulation(contract: dataForSimulationContract, token:
         })
         .catch(
         );
+}
+
+
+export async function pdfContract(idContract: number, token: string){
+    return await fetch(`${BACKEND_URL}/contract/${idContract}/pdf`, {
+        method: 'POST',
+        headers: {
+            'Content-type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+    }).then(async (resp) => {
+        const blob: Blob = await resp.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        
+        window.open(
+            blobUrl, 
+            '_blank',
+            'width=400,height=400,status=no,toolbar=no,menubar=no,location=no'
+        );
+    });
 }
