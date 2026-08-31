@@ -6,6 +6,7 @@ import { useGlobalContext } from "../../../server/context/GlobalContext";
 import { ClientDetails } from "../../../server/ClientApi";
 import HeaderClientDetails from "./components/HeaderClientDetails";
 import RenderContracts from "./components/RenderContracts";
+import { pdfContract } from "../../../server/api";
 
 export default function ClientDetailPage(){
     const [userD, setUserD] = useState<UserContractsDetails | null>(null);
@@ -17,6 +18,12 @@ export default function ClientDetailPage(){
         if(id && token){
             const data = await ClientDetails(id, token);
             setUserD(data);
+        }
+    }
+
+    const handleGeneratePdf = async (id: number) => {
+        if(token){
+            await pdfContract(id, token);
         }
     }
     
@@ -45,6 +52,7 @@ export default function ClientDetailPage(){
                     
             <RenderContracts
                 contracts={userD?.contracts || []}
+                handleGeneratePdf={handleGeneratePdf}
             />
         </Layout>
     )

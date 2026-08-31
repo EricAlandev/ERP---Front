@@ -6,9 +6,14 @@ type ContractBankBilletCombo = {
     id: number;
     name: string;
     date: string;
+    generateContract: (id: number) => void;
 }
 
-export default function ContractBankBilletCombo({id, name, date} : ContractBankBilletCombo){
+export default function ContractBankBilletCombo({id, name, date, generateContract} : ContractBankBilletCombo){
+
+    const generatePdf = () => {
+        generateContract(id);
+    }
 
     return(
         <Box>
@@ -30,7 +35,9 @@ export default function ContractBankBilletCombo({id, name, date} : ContractBankB
                 </Grid>
 
                 <Grid size={{sm:3, md:3}}>
-                    <Image/>
+                    <Image
+                      generateContract={generatePdf}
+                    />
                 </Grid>
             </Grid>
         </Box>

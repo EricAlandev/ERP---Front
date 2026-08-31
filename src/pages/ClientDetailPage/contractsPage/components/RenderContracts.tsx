@@ -3,10 +3,15 @@ import ContractBankBilletCombo from "../../ske/ContractBankBilletCombo"
 import TittleBankBilletCombo from "../../ske/TittleBankBilletCombo"
 
 type RenderContracts = {
-    contracts: Contract[]
+    contracts: Contract[];
+    handleGeneratePdf: (id: number) => void;
 }
 
-export default function RenderContracts({contracts} : RenderContracts){
+export default function RenderContracts({contracts, handleGeneratePdf} : RenderContracts){
+
+    const activatePDF = (id: number) => {
+        handleGeneratePdf(id);
+    }
 
     return(
         <>
@@ -20,6 +25,9 @@ export default function RenderContracts({contracts} : RenderContracts){
                         id={c?.idContract || 0}
                         name={c?.typeContract}
                         date={c?.date || ""}
+                        generateContract={(id) => {
+                            activatePDF(id)
+                        }}
                     />
                 ))
             )}

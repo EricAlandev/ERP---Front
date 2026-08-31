@@ -2,9 +2,10 @@ import { Box } from "@mui/material";
 
 type ButtonBotton = {
     type?: string;
+    generateContract? : () => void; 
 }
 
-export default function Image({type} : ButtonBotton){
+export default function Image({type, generateContract} : ButtonBotton){
 
     let path = "/generals/Back.png"; 
 
@@ -22,6 +23,7 @@ export default function Image({type} : ButtonBotton){
         <Box
             component="img"
             src={path}
+            onClick={generateContract}
             style={{
                 display: 'flex',
                 justifySelf: 'center',
