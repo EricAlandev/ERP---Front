@@ -14,9 +14,11 @@ export async function makeContract(contract: DataContract, token: string){
         })
         .then(async resp => {
             
-            const response : any = resp.json();
+            const response : any = await resp.json();
 
-            return {idContract: response.idContract};
+            console.log("response makeContract: ", response.idContract, response);
+
+            return response.idContract;
         })
         .catch(
             e => console.log(e)
@@ -44,8 +46,9 @@ export async function makeSimulation(contract: dataForSimulationContract, token:
 }
 
 
-export async function pdfContract(idContract: number, token: string){
-    return await fetch(`${BACKEND_URL}/contract/${idContract}/pdf`, {
+export async function pdfContract(id: number, token: string){
+
+    return await fetch(`${BACKEND_URL}/contract/${id}/pdf`, {
         method: 'POST',
         headers: {
             'Content-type' : 'application/json',

@@ -48,7 +48,10 @@ export default function ChooseMensality({idCliente,  nameCLient,quantityInstallm
 
         if(token){
             const idContract = await makeContract(contractData, token);
-            await pdfContract(idContract, token);
+
+            if(idContract !== null && idContract > 0){
+                await pdfContract(idContract, token);
+            }
         }
     }
  
