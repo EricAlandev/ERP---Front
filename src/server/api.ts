@@ -1,4 +1,4 @@
-import type {DataContract, dataForSimulationContract } from "../types/BankBillet";
+import type {DataContract, dataForSimulationContract, Installment } from "../types/BankBillet";
 
 export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -64,4 +64,22 @@ export async function pdfContract(id: number, token: string){
             'width=400,height=400,status=no,toolbar=no,menubar=no,location=no'
         );
     });
+}
+
+
+export async function callInstallments(idContract: string , token: string){
+    
+    return await fetch(`${BACKEND_URL}/contract/installments/${idContract}`, {
+        method: 'GET',
+        headers: {
+            'Content-type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    }).then(async (r) => {
+        const response : Installment[] = await r.json();
+
+        console.log("result installments", response)
+
+        return response;
+    })
 }

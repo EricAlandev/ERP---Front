@@ -11,7 +11,11 @@ export default function Image({type, generateContract} : ButtonBotton){
 
     switch (type) {
         case "contract":
-            path = "/generals/Back.png";
+            path = "/contracts/print.png";
+            break;
+
+        case "lupe":
+            path = "/contracts/lupe.png";
             break;
     
         default:
@@ -27,7 +31,8 @@ export default function Image({type, generateContract} : ButtonBotton){
             style={{
                 display: 'flex',
                 justifySelf: 'center',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                maxHeight: '25px'
             }}
         />
     )

@@ -31,3 +31,11 @@ export type DataContract = {
     nameClient?: string;
     BankBilletType?: string;
 }
+
+export type Installment = {
+    id: number;
+    price: number;
+    stats: string;
+    typecontract: string;
+    expirationdate: string;
+}

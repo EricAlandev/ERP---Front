@@ -8,7 +8,7 @@ import ProtectedRoute from './server/context/protectedRoute'
 import LoginRoute from './server/context/LoginRoute'
 import BankBilletPage from './pages/bankBillets/page'
 import ClientDetailPage from './pages/ClientDetailPage/contractsPage/page'
-import InstallmentsPage from './pages/ClientDetailPage/InstallmentsPage/page'
+import InstallmentsContractPage from './pages/ClientDetailPage/insatallmentContractPage/page'
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
 
             {/*User page */}
             <Route path='/client/:id' element={<ClientDetailPage/>}/>
-            <Route path='/client/:id/contract/:idContract' element={<InstallmentsPage/>}/>
+            <Route path='/client/:id/contract/:idContract' element={<InstallmentsContractPage/>}/>
           </Route>
       </Routes>
   )

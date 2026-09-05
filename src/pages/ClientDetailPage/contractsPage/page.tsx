@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../../components/generals/Layout";
 import { useEffect, useState } from "react";
 import type { UserContractsDetails } from "../../../types/UserTypes";
@@ -12,7 +12,10 @@ export default function ClientDetailPage(){
     const [userD, setUserD] = useState<UserContractsDetails | null>(null);
 
     const {id} = useParams();
+    const navigate = useNavigate();
+
     const {loading, token} = useGlobalContext();
+    
 
     const handleUserData = async () => {
         if(id && token){
@@ -51,8 +54,10 @@ export default function ClientDetailPage(){
             />
                     
             <RenderContracts
+                idUser={id}
                 contracts={userD?.contracts || []}
                 handleGeneratePdf={handleGeneratePdf}
+                navigate={navigate}
             />
         </Layout>
     )
