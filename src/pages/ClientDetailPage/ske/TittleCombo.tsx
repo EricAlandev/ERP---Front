@@ -30,7 +30,7 @@ export default function TittleCombo({text1, text2, text3, text4, text5, text6} :
             <Grid 
                 container 
                 spacing={2} 
-                sx={{width: '100vw', maxWidth: '470px', marginTop: '10px'}}
+                sx={{width: '100vw', maxWidth: '650px', marginTop: '10px'}}
             >
                 {arrayWithRealValue.map((text, index) => (
                     <Grid key={index} size={{sm: sizePerGrid, md: sizePerGrid}}>

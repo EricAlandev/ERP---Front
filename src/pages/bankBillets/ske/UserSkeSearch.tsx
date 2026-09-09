@@ -35,7 +35,7 @@ export default function UserSkeSearch({Email, click} : UserSkeSearch){
                 </Grid>
 
                 <Grid sx={{sm:4, md: 4}}>
-                    <Image type="contract"/>
+                    <Image type="lupe"/>
                 </Grid>
             </Box>
         </Grid>

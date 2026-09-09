@@ -10,7 +10,7 @@ export default function Image({type, generateContract} : ButtonBotton){
     let path = "/generals/Back.png"; 
 
     switch (type) {
-        case "contract":
+        case "print":
             path = "/contracts/print.png";
             break;
 

@@ -1,7 +1,7 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import type { Installment } from "../../../../types/BankBillet";
-
-
+import TypographyBottom from "../../../../components/generals/tsxComponents/headerItens/TypographyBottom";
+import Image from "../../../../components/generals/tsxComponents/headerItens/Image";
 
 export default function InstallmentComponent({id, price, stats, typecontract, expirationdate} : Installment){
 
@@ -10,36 +10,32 @@ export default function InstallmentComponent({id, price, stats, typecontract, ex
             <Grid
                 container
                 spacing={2}
-                sx={{display: 'flex' , width: '100vw', maxWidth: '400px'}}
+                sx={{display: 'flex', width: '100%', maxWidth: '650px'}}
             >
-                <Grid sx={{sm: 2.4, md: 2.4}}>
-                    <Typography>
-                        {id}
-                    </Typography>
+                <Grid size={{sm: 2, md: 2}}>
+                    <TypographyBottom text={`${id}`}/>
                 </Grid>
 
-                <Grid sx={{sm: 2.4, md: 2.4}}>
-                    <Typography>
-                        {price}
-                    </Typography>
+                <Grid size={{sm: 2, md: 2}}>
+                    <TypographyBottom text={`${price}`}/>
                 </Grid>
 
-                <Grid sx={{sm: 2.4, md: 2.4}}>
-                    <Typography>
-                        {stats}
-                    </Typography>
+                <Grid size={{sm: 2, md: 2}}>
+                    <TypographyBottom text={`${stats}`}/>
                 </Grid>
 
-                <Grid sx={{sm: 2.4, md: 2.4}}>
-                    <Typography>
-                        {typecontract}
-                    </Typography>
+                <Grid size={{sm: 2, md: 2}}>
+                    <TypographyBottom text={`${typecontract}`}/>
                 </Grid>
 
-                <Grid sx={{sm: 2.4, md: 2.4}}>
-                    <Typography>
-                        {expirationdate}
-                    </Typography>
+                <Grid size={{sm: 2, md: 2}}>
+                    <TypographyBottom text={`09/06/2024`}/>
+                </Grid>
+
+                <Grid size={{sm: 2, md: 2}}>
+                    <Image
+                        type="print"
+                    />
                 </Grid>
             </Grid>
         </>

@@ -17,6 +17,7 @@ export default function RenderInstallments({installments} : RenderInstallments){
                 text3="Stats"
                 text4="Type Contract"
                 text5="Expiration Date"
+                text6="PDF"
             />
 
             {installments.map((i, index) => (

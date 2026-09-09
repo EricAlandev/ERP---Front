@@ -25,7 +25,7 @@ export default function ContractBankBilletCombo({id, name, date, generateContrac
             <Grid 
                 container 
                 spacing={2} 
-                sx={{width: '100vw', maxWidth: '470px', marginTop: '10px'}}
+                sx={{width: '100vw', maxWidth: '650px', marginTop: '10px'}}
             >
                 <Grid size={{sm:3, md:3}}>
                     <TypographyBottom text={`${id}`}/>
@@ -56,7 +56,7 @@ export default function ContractBankBilletCombo({id, name, date, generateContrac
 
                         <Grid size={{sm: 6, md: 6}}>
                             <Image
-                                type="contract"
+                                type="print"
                                 generateContract={generatePdf}
                             />
                         </Grid>
