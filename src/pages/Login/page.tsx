@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import LoginForm from "../../components/InAndOut/LoginForm";
+import LoginForm from "./components/LoginForm";
 import { useGlobalContext } from "../../server/context/GlobalContext";
 import { loginUser } from "../../server/InAndOutApi";
 import type { UserType } from "../../types/UserTypes";

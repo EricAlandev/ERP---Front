@@ -1,8 +1,8 @@
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Login from './pages/InAndOut/page'
-import RegisterPage from './pages/InAndOut/Register'
+import Login from './pages/Login/page'
+import RegisterPage from './pages/Register/page'
 import PageGiveBillets from './pages/contracts/page'
 import ProtectedRoute from './server/context/protectedRoute'
 import LoginRoute from './server/context/LoginRoute'

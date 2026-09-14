@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { UserType } from "../../types/UserTypes";
+import type { UserType } from "../../../types/UserTypes";
 import {InputLabel, TextField } from "@mui/material";
-import BlackButton from "../generals/tsxComponents/ButtonButton";
+import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
 
 type LoginForm = {
     send: (data: UserType) => void;

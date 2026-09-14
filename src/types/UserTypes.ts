@@ -1,6 +1,7 @@
 
+//USER TYPE AND RELATIONEDS TO THE USER
 
-export type UserType = {
+export type UserType = Adress & {
     email ?: string;
     password ?: string;
     birthday ?: string;
@@ -23,6 +24,13 @@ export type UserContractsDetails = {
 
 export type Integrity = {
     integrity: string;
+}
+
+export type Adress = {
+    state?: string;
+    neighborhood?: string;
+    adress?: string;
+    adressNumber?: string;
 }
 
 export type Contract = {
