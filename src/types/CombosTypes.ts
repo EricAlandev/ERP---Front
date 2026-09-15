@@ -1,5 +1,5 @@
 
 
 export type StateCombo = {
-    state?: string;
+    State?: string;
 }

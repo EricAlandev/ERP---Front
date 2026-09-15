@@ -1,15 +1,15 @@
 import MainRegisterForm from "./components/MainRegisterForm";
 import { registerUser } from "../../server/InAndOutApi";
 import Layout from "../../components/generals/Layout";
-import { useState } from "react";
-import { ADRESS_REGISTER, MAIN_REGISTER } from "./const/RegisterConst";
+import { useEffect, useState } from "react";
+import { ADRESS_REGISTER, MAIN_REGISTER, SEND_REGISTER } from "./const/RegisterConst";
 import AdressRegisterFrom from "./components/AdressRegisterFrom";
 import type { UserType } from "../../types/UserTypes";
 
 
 export default function RegisterPage(){
 
-    const [page, setPage] = useState<String>("");
+    const [page, setPage] = useState<String>(MAIN_REGISTER);
     const [data, setData] = useState<UserType | null>();
 
     const handleNextPage = (nextPage : string, data : UserType | null) => {
@@ -25,26 +25,36 @@ export default function RegisterPage(){
         else if((nextPage) && nextPage === ADRESS_REGISTER){
             setPage(nextPage);
             setData(data)
+
+            console.log(data);
+        }
+
+        else if((nextPage) && nextPage === SEND_REGISTER){
+            if(data){
+                handleSendForm(data);
+            }
         }
     }
 
-    const handleSendForm = async (adressData: UserType) => {
-        setData((e) => (
-            {...e, data}
-        ))
-        await registerUser(adressData)
+    const handleSendForm = async (data: UserType) => {
+            setData((e) => (
+                {...e, data}
+            ))
+            await registerUser(data)
     }
 
     return(
         <Layout>
-            {MAIN_REGISTER && (
+            {page == MAIN_REGISTER && (
                 <MainRegisterForm
                     nextPage={handleNextPage}
                 />
             )}
             
-            {ADRESS_REGISTER && (
-                <AdressRegisterFrom/>
+            {page == ADRESS_REGISTER && (
+                <AdressRegisterFrom
+                    nextPage={handleNextPage}
+                />
             )}
         </Layout>
     )

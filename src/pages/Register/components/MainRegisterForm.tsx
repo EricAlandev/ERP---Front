@@ -8,7 +8,7 @@ type RegisterForm = {
     nextPage: (nextPage: string , data: UserType) => void;
 }
 
-export default function RegisterForm({nextPage} : RegisterForm){
+export default function     RegisterForm({nextPage} : RegisterForm){
 
     const [userData, setUserData] = useState<UserType>({email: "", password: "", birthday: ""});
     
