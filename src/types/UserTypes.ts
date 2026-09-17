@@ -27,6 +27,7 @@ export type Integrity = {
 }
 
 export type Adress = {
+    cep?: string;
     state?: string;
     neighborhood?: string;
     adress?: string;

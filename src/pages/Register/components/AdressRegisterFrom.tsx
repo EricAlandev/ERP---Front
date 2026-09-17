@@ -1,9 +1,12 @@
-import { Box, Button, FormLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Box, Button, FormLabel, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { StateCombo } from "../../../types/CombosTypes";
 import { getStatesCombos } from "../../../server/ComboApi";
 import type { UserType } from "../../../types/UserTypes";
 import { MAIN_REGISTER, SEND_REGISTER } from "../const/RegisterConst";
+import { findCEP } from "../../../server/CepApi";
+import { AnimatePresence } from "framer-motion";
+import Motion from "../../../components/mui/Motion";
 
 
 type AdressRegisterFrom = {
@@ -12,8 +15,10 @@ type AdressRegisterFrom = {
 
 export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
 
-    const [data, setData] = useState<UserType>({adress: "", neighborhood: "", state: ""});
+    const [data, setData] = useState<UserType>({adress: "", neighborhood: "", state: "", cep: ""});
     const [states, setStates] = useState<StateCombo[]>([]);
+    const [cepError, setCepError] = useState<boolean>();
+    const [cepErrorMessage, setCepErrorMessage] = useState<string | null>();
 
     const handleCombos = async () => {
         handleStateCombo();
@@ -42,11 +47,33 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
         nextPage(SEND_REGISTER, data);
     }
 
-    const handleChanger = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChanger = async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name ,value} = e.target;
         setData((d) => (
             {...d, [name] : value}
         ))
+
+        if(name === "cep" && value.length === 8){
+            await handleCEP(value)
+        }
+
+        else{
+            setCepError(false);
+            setCepErrorMessage(null);
+        }
+    }
+
+    const handleCEP = async (cep: string) => {
+        try {
+            const cepProps : any = await findCEP(cep)
+            setData((d) => (
+                {...d, state : cepProps?.uf}
+            ));
+            
+        } catch (error) {
+            setCepError(true);
+            setCepErrorMessage("Cep not found");
+        }
     }
 
     useEffect(() => {
@@ -72,37 +99,135 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
                 </Box>
             </Button>
 
-            <form
-                onSubmit={sendForm}
-            >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px'  
-                    }}
+                <form
+                    onSubmit={sendForm}
                 >
-                    <FormLabel>State</FormLabel>
-                    <Select
-                    id="state"
-                    name="state" 
-                    value={data.state}
-                    onChange={handleChanger}
-                    >
-                        <MenuItem 
-                            value={""}
+            <Grid
+                container
+                sx={{
+                    width: "100vh",
+                    maxWidth: "415px",
+                    gap: "8px",
+                    marginTop: '30px'
+                }}
+            >
+                        <Grid
+                            size={{sm: 5.8, md: 5.8}}
+                            sx={{
+                                position: 'relative'
+                            }}
                         >
-                            Choose a State
-                        </MenuItem>
+                                <FormLabel htmlFor="cep">CEP</FormLabel>
 
-                        {states.map((s) => (
-                            <MenuItem value={`${s.State}`}>
-                                {s?.State}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </Box>
-            </form>
+                                <TextField
+                                    id="cep"
+                                    value={data.cep}
+                                    name="cep"
+                                    onChange={handleChanger}
+                                    slotProps={{ htmlInput: {maxLength: 8}}}
+                                    fullWidth
+                                />
+
+                                <AnimatePresence>
+                                    {cepError && (
+                                        <Motion>
+                                            <Typography
+                                                sx={{
+                                                    position: 'absolute',
+                                                    right: '0',
+                                                    bottom: '-20px',
+                                                    mt: '5px',
+                                                    fontSize: '13px',              
+                                                    color: '#FF3333'
+                                                }}
+                                            >
+                                                {cepErrorMessage}
+                                            </Typography>
+                                        </Motion>
+                                    )}
+                                </AnimatePresence>
+                            </Grid>
+
+                            <Grid
+                                size={{sm: 5.8, md: 5.8}}
+                            >
+                                <FormLabel>State</FormLabel>
+                                <Select
+                                    id="state"
+                                    name="state" 
+                                    value={data.state}
+                                    onChange={handleChanger}
+                                    fullWidth   
+                                >
+                                    <MenuItem 
+                                        value={""}
+                                        selected
+                                    >
+                                        Choose a State
+                                    </MenuItem>
+
+                                    {states.map((s) => (
+                                        <MenuItem value={`${s.State}`}>
+                                            {s?.State}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </Grid>
+                    </Grid>
+                </form>
+
+            <Grid
+                container
+                sx={{
+                    width: '100vw',
+                    maxWidth: '410px',
+                    marginTop: '25px'
+                }}
+            >
+                <Grid
+                    size={{sm: 12, md: 12}}
+                >
+                    <TextField
+                        id="neighborhood"
+                        name="neighborhood"
+                        value={data.neighborhood}
+                        placeholder="type the neighborhood"
+                        fullWidth
+                    />
+                </Grid>
+            </Grid>
+
+            <Grid
+                container
+                sx={{
+                    width: '100vw',
+                    maxWidth: '415px',
+                    marginTop: '25px',
+                    gap: '8px',
+                }}
+            >
+                <Grid
+                    size={{sm: 5.8, md: 5.8}}
+                >
+                    <TextField
+                        id="adress"
+                        name="adress"
+                        value={data.adress}
+                        placeholder="type your adress"
+                    />
+                </Grid>
+
+                <Grid
+                    size={{sm: 5.8, md: 5.8}}
+                >
+                    <TextField
+                        id="adressNumber"
+                        name="adressNumber"
+                        value={data.adressNumber}
+                        placeholder="Adress Number"
+                    />
+                </Grid>
+            </Grid>
         </Box>
     )
 }
