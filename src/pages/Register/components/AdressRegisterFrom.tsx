@@ -7,6 +7,8 @@ import { MAIN_REGISTER, SEND_REGISTER } from "../const/RegisterConst";
 import { findCEP } from "../../../server/CepApi";
 import { AnimatePresence } from "framer-motion";
 import Motion from "../../../components/mui/Motion";
+import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
+import TextErrorAbso from "../../../components/generals/tsxComponents/error/TextErrorAbso";
 
 
 type AdressRegisterFrom = {
@@ -53,7 +55,9 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
             {...d, [name] : value}
         ))
 
-        if(name === "cep" && value.length === 8){
+        const cleanValue = value.replace("-","");
+        console.log(cleanValue, cleanValue.length)
+        if(name === "cep" && value.length === 8 ){
             await handleCEP(value)
         }
 
@@ -66,10 +70,9 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
     const handleCEP = async (cep: string) => {
         try {
             const cepProps : any = await findCEP(cep)
-            setData((d) => (
-                {...d, state : cepProps?.uf}
+            setData(() => (
+                cepProps
             ));
-            
         } catch (error) {
             setCepError(true);
             setCepErrorMessage("Cep not found");
@@ -124,25 +127,16 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
                                     value={data.cep}
                                     name="cep"
                                     onChange={handleChanger}
-                                    slotProps={{ htmlInput: {maxLength: 8}}}
+                                    slotProps={{ htmlInput: {maxLength: 9}}}
                                     fullWidth
                                 />
 
                                 <AnimatePresence>
                                     {cepError && (
                                         <Motion>
-                                            <Typography
-                                                sx={{
-                                                    position: 'absolute',
-                                                    right: '0',
-                                                    bottom: '-20px',
-                                                    mt: '5px',
-                                                    fontSize: '13px',              
-                                                    color: '#FF3333'
-                                                }}
-                                            >
-                                                {cepErrorMessage}
-                                            </Typography>
+                                            <TextErrorAbso
+                                                text="CEP não encontrado"
+                                            />
                                         </Motion>
                                     )}
                                 </AnimatePresence>
@@ -166,8 +160,8 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
                                         Choose a State
                                     </MenuItem>
 
-                                    {states.map((s) => (
-                                        <MenuItem value={`${s.State}`}>
+                                    {states.map((s, index) => (
+                                        <MenuItem key={index} value={`${s.State}`}>
                                             {s?.State}
                                         </MenuItem>
                                     ))}
@@ -191,6 +185,7 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
                         id="neighborhood"
                         name="neighborhood"
                         value={data.neighborhood}
+                        onChange={handleChanger}
                         placeholder="type the neighborhood"
                         fullWidth
                     />
@@ -213,6 +208,7 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
                         id="adress"
                         name="adress"
                         value={data.adress}
+                        onChange={handleChanger}
                         placeholder="type your adress"
                     />
                 </Grid>
@@ -224,9 +220,15 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
                         id="adressNumber"
                         name="adressNumber"
                         value={data.adressNumber}
+                        onChange={handleChanger}
                         placeholder="Adress Number"
                     />
                 </Grid>
+
+                <BlackButton 
+                    valueOnClick={sendForm}
+                    text="Send"
+                />
             </Grid>
         </Box>
     )
