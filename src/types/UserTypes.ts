@@ -5,7 +5,10 @@ export type UserType = Adress & {
     email ?: string;
     password ?: string;
     birthday ?: string;
+    gender?: string;
     token?: string;
+    typeUser?: string;
+    cic?: string;
 }
 
 export type SearchUser = {

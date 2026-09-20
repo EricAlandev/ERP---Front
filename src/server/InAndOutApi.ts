@@ -2,7 +2,11 @@ import type { UserType } from "../types/UserTypes";
 
 export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
-export async function registerUser(userData: UserType){
+export async function registerUser(userData: UserType | null){
+
+        if(userData == null){
+            throw new Error("data error");
+        }
 
         return await fetch(`${BACKEND_URL}/register`, {
             method: "POST",

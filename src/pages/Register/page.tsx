@@ -1,7 +1,7 @@
 import MainRegisterForm from "./components/MainRegisterForm";
 import { registerUser } from "../../server/InAndOutApi";
 import Layout from "../../components/generals/Layout";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { ADRESS_REGISTER, MAIN_REGISTER, SEND_REGISTER } from "./const/RegisterConst";
 import AdressRegisterFrom from "./components/AdressRegisterFrom";
 import type { UserType } from "../../types/UserTypes";
@@ -10,7 +10,7 @@ import type { UserType } from "../../types/UserTypes";
 export default function RegisterPage(){
 
     const [page, setPage] = useState<String>(MAIN_REGISTER);
-    const [data, setData] = useState<UserType | null>();
+    const [data, setData] = useState<UserType | null>(null);
 
     const handleNextPage = (nextPage : string, data : UserType | null) => {
         if(nextPage && nextPage == page){
@@ -36,11 +36,11 @@ export default function RegisterPage(){
         }
     }
 
-    const handleSendForm = async (data: UserType) => {
+    const handleSendForm = async (adressData: UserType) => {
             setData((e) => (
-                {...e, data}
+                {...e, adressData}
             ))
-            await registerUser(data)
+            await registerUser(data);
     }
 
     return(

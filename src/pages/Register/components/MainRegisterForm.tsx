@@ -1,68 +1,89 @@
 import { useState } from "react"
 import type { UserType } from "../../../types/UserTypes";
-import { Box, FormLabel, InputLabel, TextField, Typography } from "@mui/material";
+import { Box, FormLabel, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
 import { ADRESS_REGISTER } from "../const/RegisterConst";
 import TextError from "../../../components/generals/tsxComponents/error/TextError";
+import MaskedTextFIeld from "../../../components/mui/MaskedTextField";
+import { RegisterValidator } from "../validators/RegisterValidator";
 
 
 type RegisterForm = {
     nextPage: (nextPage: string , data: UserType) => void;
 }
 
-export default function     RegisterForm({nextPage} : RegisterForm){
+export default function  RegisterForm({nextPage} : RegisterForm){
 
-    const [userData, setUserData] = useState<UserType>({email: "", password: "", birthday: ""});
+    const [userData, setUserData] = useState<UserType>({email: "", password: "", birthday: "", typeUser: "", cic: "" , gender: ""});
     const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<String | null>(null);
     
-    const handleChanger = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleChanger = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
-        setUserData((e) => (
-           { ...e, [name] : value}
-        ))
+        setUserData((e) => {
+            const updateValues =  { ...e, [name] : value};
+
+            cleanFields(updateValues, name, value);
+
+            return updateValues;
+        })
     }
 
-    const handleSubmit = (e: React.SubmitEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
-        const blankFields : boolean = verifyBlankFields();
+        const blankFields : boolean | void = await verifyBlankFields();
 
         if(!blankFields){
             nextPage(ADRESS_REGISTER, userData);
         }
     }
 
-    const verifyBlankFields = () => {
+    const verifyBlankFields = async () => {
 
-        let message : any | null = null;
-
-        //veriffications + error message
-        if(!userData.email || (userData?.email && userData?.email.trim()) === "" || userData?.email === null){
-            message = "Email not be blank";
-        }
-
-        else if(!userData.password || (userData?.password && userData?.password.trim()) === "" || userData?.password === null){
-            message = "Password not be blank";
-        }
-
-        else if(!userData.birthday || (userData?.birthday && userData?.birthday.trim()) === "" || userData?.birthday === null){
-            message = "Birthday not be blank";
-        }
-
-        else{
-            message = null;
-        }
-
-        //set the error;
-        if(message !== null && message.trim() !== ""){
+        try {
+            await RegisterValidator(userData, userData?.typeUser)
+        } catch (error : any) {
             setError(true)
-            setErrorMessage(message);
+            setErrorMessage(error?.message);
             return true;
         }
+    }
 
-        else{
-            return false;
+    const cleanFields = (object: UserType , nameField : string, value: string) => {
+        if(nameField === "typeUser"){
+            const typeClient = value;
+
+            object.cic = "";
+            if(typeClient === "P"){
+                object.gender = "";
+            }
+
+            else{
+                object.gender = "";
+            }
         }
+    }
+
+    const renderCic = () => {
+        const typeUser = userData?.typeUser;
+
+        const mask : string = (typeUser === "P" ? "000.000.000-00" : "**.***.***/****-00");
+        const cpf : string = (typeUser === "P"? "Cpf" : "Cnpj");
+
+        return (
+           <>
+                <FormLabel htmlFor="cic">Client {cpf}</FormLabel>
+                <MaskedTextFIeld
+                    key={mask}
+                    id="cic"
+                    name="cic"
+                    value={userData?.cic}
+                    onChange={handleChanger}
+                    mask={mask}
+                />
+                
+           </>
+        )
     }
 
     return(
@@ -105,6 +126,41 @@ export default function     RegisterForm({nextPage} : RegisterForm){
                         value={userData.birthday}
                         onChange={handleChanger}
                     />
+
+                    
+                    <FormLabel htmlFor="typeUser">Type of User</FormLabel>
+                    <Select
+                        id="typeUser"
+                        name="typeUser"
+                        value={userData?.typeUser}
+                        onChange={handleChanger}
+                    >
+                        <MenuItem value="P">Person</MenuItem>
+                        <MenuItem value="C">Company Owner</MenuItem>
+                    </Select>
+
+                    {userData.typeUser === "P" && (
+                        <>
+                            <FormLabel htmlFor="gender">Client Gender</FormLabel>
+                        
+                            <Select
+                                id="gender"
+                                name="gender"
+                                value={userData?.gender}
+                                onChange={handleChanger}
+                            >
+                                <MenuItem value="M">Male</MenuItem>
+                                <MenuItem value="F">Female</MenuItem>
+                            </Select>
+                        </>
+                    )}
+
+                    
+                    
+                    {/*RENDERIZE THE CPF OR THE CNPJ HERE CALLING THE FUNCTION */}
+                    {
+                        renderCic()
+                    }
 
                     {error && (
                         <TextError text={`${errorMessage}`}/>

@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import Motion from "../../../components/mui/Motion";
 import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
 import TextErrorAbso from "../../../components/generals/tsxComponents/error/TextErrorAbso";
+import MaskedTextFIeld from "../../../components/mui/MaskedTextField";
 
 
 type AdressRegisterFrom = {
@@ -30,11 +31,7 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
         try {
             const statesValue : StateCombo[]  = await getStatesCombos();
 
-            console.log("States values", statesValue);
-
             setStates(statesValue);
-
-            console.log("set state value", states);
 
         } catch (error) {
             
@@ -54,16 +51,19 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
         setData((d) => (
             {...d, [name] : value}
         ))
+        
+        if(name === "cep"){
+            const cleanCEP = value.replace(".", "").trim();
 
-        const cleanValue = value.replace("-","");
-        console.log(cleanValue, cleanValue.length)
-        if(name === "cep" && value.length === 8 ){
-            await handleCEP(value)
-        }
+            console.log("cep", cleanCEP, cleanCEP.length)
+            if(cleanCEP.length === 8 ){
+                await handleCEP(cleanCEP)
+            }
 
-        else{
-            setCepError(false);
-            setCepErrorMessage(null);
+            else{
+                setCepError(false);
+                setCepErrorMessage(null);
+            }
         }
     }
 
@@ -122,13 +122,12 @@ export default function AdressRegisterFrom({nextPage} : AdressRegisterFrom){
                         >
                                 <FormLabel htmlFor="cep">CEP</FormLabel>
 
-                                <TextField
+                                <MaskedTextFIeld
                                     id="cep"
-                                    value={data.cep}
                                     name="cep"
+                                    value={data.cep}
                                     onChange={handleChanger}
-                                    slotProps={{ htmlInput: {maxLength: 9}}}
-                                    fullWidth
+                                    mask="00000.000"
                                 />
 
                                 <AnimatePresence>
