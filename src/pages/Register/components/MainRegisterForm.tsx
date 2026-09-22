@@ -1,11 +1,12 @@
 import { useState } from "react"
 import type { UserType } from "../../../types/UserTypes";
-import { Box, FormLabel, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Box, FormLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
 import { ADRESS_REGISTER } from "../const/RegisterConst";
 import TextError from "../../../components/generals/tsxComponents/error/TextError";
 import MaskedTextFIeld from "../../../components/mui/MaskedTextField";
 import { RegisterValidator } from "../validators/RegisterValidator";
+import { useNavigate } from "react-router-dom";
 
 
 type RegisterForm = {
@@ -17,6 +18,8 @@ export default function  RegisterForm({nextPage} : RegisterForm){
     const [userData, setUserData] = useState<UserType>({email: "", password: "", birthday: "", typeUser: "", cic: "" , gender: ""});
     const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<String | null>(null);
+
+    const navigate = useNavigate();
     
     const handleChanger = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
@@ -35,13 +38,13 @@ export default function  RegisterForm({nextPage} : RegisterForm){
 
         if(!blankFields){
             nextPage(ADRESS_REGISTER, userData);
+            navigate("/login");
         }
     }
 
     const verifyBlankFields = async () => {
-
         try {
-            await RegisterValidator(userData, userData?.typeUser)
+            await RegisterValidator({userData: userData, userType: userData?.typeUser});
         } catch (error : any) {
             setError(true)
             setErrorMessage(error?.message);

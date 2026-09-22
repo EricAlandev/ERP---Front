@@ -8,7 +8,7 @@ type RegisterValidator = {
 }
 
 export const RegisterValidator = async ({userData, userType} : RegisterValidator) => {
-    const registerSchema = yup.object({
+    let registerSchema : any = yup.object({
         email: yup
             .string()
             .email("Type a valid email")
@@ -41,8 +41,8 @@ export const RegisterValidator = async ({userData, userType} : RegisterValidator
             .required("Gender cannot be null")
     });
 
-    if(userType !== "P"){
-        registerSchema.omit(["gender"]);
+    if(userType === "C"){
+        registerSchema = registerSchema.omit(["gender"]);
     }
 
     await registerSchema.validate(userData);
