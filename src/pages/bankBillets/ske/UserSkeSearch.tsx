@@ -1,6 +1,6 @@
 import {Box, Grid, Typography } from "@mui/material";
 import type { SearchUser } from "../../../types/UserTypes";
-import Image from "../../../components/generals/tsxComponents/headerItens/Image";
+import Image from "../../../components/mui/headerItens/Image";
 
 type UserSkeSearch = SearchUser & {
     click: () => void;

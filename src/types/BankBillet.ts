@@ -4,20 +4,14 @@ export type BankBillet = {
     date: string
 }
 
-export type dataForSimulationContract = {
-    idClient: string;
-    bankBilletType: string;
-    price: string;
-}
-
-export type SimulationContract = {
-    QuantityInstallments: number;
-    idClient: number;
-    nameClient: string;
-    BankBilletType: string;
-    statsClient: Stats[];
-    taxes: number;
-    price: number;
+export type dataSimulationContract = {
+    idClient?: string;
+    bankBilletType?: string;
+    price?: string;
+    QuantityInstallments?: string;
+    nameClient?: string;
+    statsClient?: Stats[];
+    taxes?: number;
 }
 
 export type Stats = {

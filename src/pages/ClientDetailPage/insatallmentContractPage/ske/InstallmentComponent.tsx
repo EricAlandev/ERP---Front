@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import type { Installment } from "../../../../types/BankBillet";
-import TypographyBottom from "../../../../components/generals/tsxComponents/headerItens/TypographyBottom";
-import Image from "../../../../components/generals/tsxComponents/headerItens/Image";
+import TypographyBottom from "../../../../components/mui/headerItens/TypographyBottom";
+import Image from "../../../../components/mui/headerItens/Image";
 
 export default function InstallmentComponent({id, price, stats, typecontract, expirationdate} : Installment){
 

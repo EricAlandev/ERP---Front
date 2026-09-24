@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import TypographyTop from "../../../components/generals/tsxComponents/headerItens/TypographyTop";
+import TypographyTop from "../../../components/mui/headerItens/TypographyTop";
 
 type TittleBankBilletCombo = {
     text1?: string;

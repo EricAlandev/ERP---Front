@@ -1,4 +1,4 @@
-import type {DataContract, dataForSimulationContract, Installment } from "../types/BankBillet";
+import type {DataContract, dataSimulationContract, Installment } from "../types/BankBillet";
 
 export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -25,7 +25,7 @@ export async function makeContract(contract: DataContract, token: string){
         );
 }
 
-export async function makeSimulation(contract: dataForSimulationContract, token: string){
+export async function makeSimulation(contract: dataSimulationContract, token: string){
         return await fetch(`${BACKEND_URL}/contract/simulation/${contract?.idClient}`, {
             method: "POST",
             headers: {

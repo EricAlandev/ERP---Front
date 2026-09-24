@@ -1,28 +1,58 @@
-import React, { useState } from "react";
-import type { dataForSimulationContract } from "../../types/BankBillet";
+import React, { useEffect, useState } from "react";
+import type { dataSimulationContract } from "../../types/BankBillet";
 import { LT, MT } from "../bankBillets/constants/PageBankBilletsValue";
 import {Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 
 type GiveBoletos = { 
-    send: (contract: dataForSimulationContract) => void;
+    send: (contract: dataSimulationContract) => void;
+    simulationData: dataSimulationContract | null;
 }
 
-export default function GenerateCreditOptions({ send }: GiveBoletos) {
+export default function GenerateCreditOptions({ send, simulationData }: GiveBoletos) {
 
-    const [contrat, setContrat] = useState<dataForSimulationContract>({
+    const [contrat, setContrat] = useState<dataSimulationContract>({
         idClient: "", 
         bankBilletType: "", 
         price: "",
+        QuantityInstallments: ""
     });
+
+    const [installments, setInstallments] = useState<number[]>([]);
     
     const handleChanger = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setContrat((c : dataForSimulationContract) => ({
-            ...c, 
-            [name]: value
-        }));
+        setContrat((c : dataSimulationContract) => {
+            const object : any = {...c, [name] : value};
+
+            if(name === "price"){
+                object.quantityInstallments = ""
+            }
+
+            return (object);
+        });
+
     };
+
+    const quantityInstallment = Number(contrat?.QuantityInstallments);
+
+    const defineInstallments = () => {
+        if(quantityInstallment && quantityInstallment > 0){
+            const arrayInstallments : number[] = [];
+
+            for(let i = 0; i < quantityInstallment; i++){
+                arrayInstallments.push(i + 1);
+            }
+
+            setInstallments(arrayInstallments);
+        }
+    }
+
+    console.log("simulation data", simulationData);
+
+    useEffect(() => {
+        defineInstallments();
+    }, [simulationData])
 
     return (
         <>
@@ -43,10 +73,13 @@ export default function GenerateCreditOptions({ send }: GiveBoletos) {
                         required
                     />
 
-                    <InputLabel id="bankBilletType">Boleto types</InputLabel>
+                    <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px', marginTop: '15px'}}>
 
-                    <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px'}}>
                         <Grid size={{xs: 6, md:6}}>
+                            <InputLabel id="bankBilletType">
+                                Boleto types
+                            </InputLabel>
+
                             <Select 
                                 id="bankBilletType"
                                 name="bankBilletType" 
@@ -62,10 +95,14 @@ export default function GenerateCreditOptions({ send }: GiveBoletos) {
                         </Grid>
 
                         <Grid size={{xs:6, md:6}}>
+
+                            <InputLabel id="Total Price">
+                                Loan Price
+                            </InputLabel>
+
                             <TextField
                                 id="price"
                                 name="price"
-                                label="Total Price"
                                 value={contrat.price}
                                 onChange={handleChanger}
                                 fullWidth
@@ -73,6 +110,47 @@ export default function GenerateCreditOptions({ send }: GiveBoletos) {
                             />
                         </Grid>
                     </Grid>
+
+                    <Grid 
+                        container
+                        spacing={2}
+                        sx={{
+                            width: '100%',
+                            maxWidth: '600px',
+                            marginTop: '15px'
+                        }}
+                    >
+                         <Grid sx={{sm: 6, md: 6}}>
+                            {contrat?.QuantityInstallments != null  && installments.length > 0 &&(
+                                <>
+                                    <InputLabel>Installments</InputLabel>
+                                    <Select
+                                        id="quantityInstallments"
+                                        name="quantityInstallments"
+                                        value={contrat?.QuantityInstallments}
+                                        onChange={handleChanger}
+                                        sx={{
+                                            width: '30vw',
+                                            maxWidth: '170px'
+                                        }}
+                                    >
+                                        {installments?.map((iNumber, index) => (
+                                                <MenuItem
+                                                    key={index}
+                                                    value={iNumber}
+                                                >
+                                                    {iNumber}x
+                                                </MenuItem>
+                                            ))
+                                        }
+                                    </Select>
+                                </>
+                            )}
+                    
+                        </Grid>
+                    </Grid>
+
+                
 
                     <Button 
                         variant="contained" 

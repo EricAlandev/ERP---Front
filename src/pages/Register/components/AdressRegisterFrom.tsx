@@ -6,10 +6,10 @@ import type { UserType } from "../../../types/UserTypes";
 import { MAIN_REGISTER, SEND_REGISTER } from "../const/RegisterConst";
 import { findCEP } from "../../../server/CepApi";
 import { AnimatePresence } from "framer-motion";
-import Motion from "../../../components/mui/Motion";
-import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
-import TextErrorAbso from "../../../components/generals/tsxComponents/error/TextErrorAbso";
-import MaskedTextFIeld from "../../../components/mui/MaskedTextField";
+import Motion from "../../../components/mui/generals/Motion";
+import BlackButton from "../../../components/mui/generals/ButtonButton";
+import TextErrorAbso from "../../../components/mui/error/TextErrorAbso";
+import MaskedTextFIeld from "../../../components/mui/generals/MaskedTextField";
 
 
 type AdressRegisterFrom = {

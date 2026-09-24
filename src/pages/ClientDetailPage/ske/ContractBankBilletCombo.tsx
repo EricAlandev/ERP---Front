@@ -1,6 +1,6 @@
 import { Box, Grid } from "@mui/material";
-import TypographyBottom from "../../../components/generals/tsxComponents/headerItens/TypographyBottom";
-import Image from "../../../components/generals/tsxComponents/headerItens/Image";
+import TypographyBottom from "../../../components/mui/headerItens/TypographyBottom";
+import Image from "../../../components/mui/headerItens/Image";
 
 type ContractBankBilletCombo = {
     id: number;

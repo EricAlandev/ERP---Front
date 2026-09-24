@@ -2,26 +2,29 @@ import { useState } from "react";
 import Layout from "../../components/generals/Layout";
 import {makeSimulation } from "../../server/api";
 import { useGlobalContext } from "../../server/context/GlobalContext";
-import type { dataForSimulationContract, SimulationContract } from "../../types/BankBillet";
+import type { dataSimulationContract } from "../../types/BankBillet";
 import GenerateCreditOptions from "./GenerateCreditOptions";
-import ToMakeContract from "./makeContracts/ToMakeContract";
-import { Contract, SimulationValue } from "./constants/PageValues";
+import {SimulationValue } from "./constants/PageValues";
 
 export default function PageGiveBillets(){
 
     const [actualPage, setActualPage] = useState<string>(SimulationValue);
-    const [simulationData, setSimulationData] = useState<SimulationContract | null>(null);
+    const [simulationData, setSimulationData] = useState<dataSimulationContract | null>(null);
     const [sucess, setSucess] = useState<boolean | null>(false);
     const [message, setMessage] = useState<string>("");
 
     const {token} = useGlobalContext();
 
-    const Simulation = async (data : dataForSimulationContract) => { 
+    const fetchPreData = async (data : dataSimulationContract) => { 
         if(token){
-            const dataSimulation = await makeSimulation(data, token);
+            const dataSimulation : dataSimulationContract | null  = await makeSimulation(data, token);
 
-            setSimulationData(dataSimulation);
-            setActualPage(Contract);
+            console.log('Before the if', dataSimulation)
+            if(dataSimulation !== null){
+                setSimulationData((d) => ({
+                    ...d, data
+                }));
+            }
         }
     }
 
@@ -29,19 +32,8 @@ export default function PageGiveBillets(){
         <Layout>
             {actualPage === SimulationValue && (
                 <GenerateCreditOptions
-                    send={(data) => {
-                        Simulation(data)
-                    }}
-                />
-            )}
-
-            {actualPage === Contract && (
-                <ToMakeContract
-                    token={token}
-                    data={simulationData || null}
-                    setActualPage={setActualPage}
-                    setSucess={setSucess}
-                    setMessage={setMessage}
+                    send={fetchPreData}
+                    simulationData={simulationData}
                 />
             )}
         </Layout>

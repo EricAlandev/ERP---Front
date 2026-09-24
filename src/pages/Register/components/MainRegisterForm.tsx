@@ -1,10 +1,10 @@
 import { useState } from "react"
 import type { UserType } from "../../../types/UserTypes";
 import { Box, FormLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import BlackButton from "../../../components/generals/tsxComponents/ButtonButton";
+import BlackButton from "../../../components/mui/generals/ButtonButton";
 import { ADRESS_REGISTER } from "../const/RegisterConst";
-import TextError from "../../../components/generals/tsxComponents/error/TextError";
-import MaskedTextFIeld from "../../../components/mui/MaskedTextField";
+import TextError from "../../../components/mui/error/TextError";
+import MaskedTextFIeld from "../../../components/mui/generals/MaskedTextField";
 import { RegisterValidator } from "../validators/RegisterValidator";
 import { useNavigate } from "react-router-dom";
 
