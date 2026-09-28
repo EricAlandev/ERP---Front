@@ -14,7 +14,7 @@ export default function Login(){
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const {login} = useGlobalContext();
+    const {login} = useGlobalContext();s
 
     const handleSubmit = async (data : UserType) => {
             const validate : boolean = await blankValidade(data);

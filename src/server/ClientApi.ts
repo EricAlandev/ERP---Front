@@ -18,6 +18,24 @@ export async function UserSearchFetch(data: SearchUser, token: string){
 
 }
 
+export async function fetchPreLimits(id?: string, token?: string){
+
+    return await fetch(`${BACKEND_URL}/users/limits/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-type' : 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    }).then(async (result : any) => {
+        return await result.json();
+
+    }).catch(async (error: any) => {
+        
+        throw new Error(error?.message);
+    })
+}
+
+
 export async function ClientDetails(idClint: string, token: string){
     return await fetch(`${BACKEND_URL}/users/${idClint}`, {
         method: "GET",

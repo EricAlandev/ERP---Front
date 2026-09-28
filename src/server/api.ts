@@ -45,7 +45,6 @@ export async function makeSimulation(contract: dataSimulationContract, token: st
         );
 }
 
-
 export async function pdfContract(id: number, token: string){
 
     return await fetch(`${BACKEND_URL}/contract/${id}/pdf`, {

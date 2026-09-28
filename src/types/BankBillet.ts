@@ -4,6 +4,11 @@ export type BankBillet = {
     date: string
 }
 
+export type preLimits = {
+    maxLoan : number,
+    quantityInstallments: number
+}
+
 export type dataSimulationContract = {
     idClient?: string;
     bankBilletType?: string;

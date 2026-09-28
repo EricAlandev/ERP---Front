@@ -73,7 +73,9 @@ export default function GenerateCreditOptions({ send, simulationData }: GiveBole
                         required
                     />
 
-                    <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px', marginTop: '15px'}}>
+                    
+                    {/*
+                        <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px', marginTop: '15px'}}>
 
                         <Grid size={{xs: 6, md:6}}>
                             <InputLabel id="bankBilletType">
@@ -149,9 +151,9 @@ export default function GenerateCreditOptions({ send, simulationData }: GiveBole
                     
                         </Grid>
                     </Grid>
+                    */}
 
-                
-
+        
                     <Button 
                         variant="contained" 
                         sx={{
