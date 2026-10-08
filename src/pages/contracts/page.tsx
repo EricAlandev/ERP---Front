@@ -10,7 +10,7 @@ import { fetchPreLimits } from "../../server/ClientApi";
 export default function PageGiveBillets(){
 
     const [actualPage, setActualPage] = useState<string>(SimulationValue);
-    const [simulationData, setSimulationData] = useState<preLimits | null>(null);
+    const [preData, setPreData] = useState<preLimits | null>(null);;
     const [sucess, setSucess] = useState<boolean | null>(false);
     const [message, setMessage] = useState<string>("");
 
@@ -18,9 +18,10 @@ export default function PageGiveBillets(){
 
     const fetchPreData = async (data : dataSimulationContract) => { 
         if(token){
-            const dataSimulation : preLimits | null  = await fetchPreLimits(data?.idClient, token);
+            const preLimits : preLimits | null  = await fetchPreLimits(data?.idClient, token);
 
-            console.log("data simulation", dataSimulation)
+            setPreData(preLimits);
+            
         }
     }
 
@@ -29,7 +30,7 @@ export default function PageGiveBillets(){
             {actualPage === SimulationValue && (
                 <GenerateCreditOptions
                     send={fetchPreData}
-                    simulationData={simulationData}
+                    preData={preData}
                 />
             )}
         </Layout>

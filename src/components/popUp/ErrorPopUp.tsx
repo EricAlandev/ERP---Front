@@ -8,7 +8,7 @@ type ErrorPopUp = {
     setErrorMessage: any;
 }
 
-export default function ErrorPopUp({error, errorMessage,  setError, setErrorMessage}: ErrorPopUp){
+export default function ErrorPopUp({error, setError, errorMessage, setErrorMessage}: ErrorPopUp){
 
     const handleClosePopUp = () => {
         setError(false);

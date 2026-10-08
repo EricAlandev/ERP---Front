@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
-import type { dataSimulationContract } from "../../types/BankBillet";
-import { LT, MT } from "../bankBillets/constants/PageBankBilletsValue";
+import type { dataSimulationContract, preLimits } from "../../types/BankBillet";
 import {Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { LT, MT } from "../bankBillets/constants/PageBankBilletsValue";
+import ErrorPopUp from "../../components/popUp/errorPopUp";
+import ClientHeaderData from "./components/ClientHeaderData";
 
 
 type GiveBoletos = { 
     send: (contract: dataSimulationContract) => void;
-    simulationData: dataSimulationContract | null;
+    preData: preLimits | null;
 }
 
-export default function GenerateCreditOptions({ send, simulationData }: GiveBoletos) {
+export default function GenerateCreditOptions({ send, preData }: GiveBoletos) {
 
+    const [installments, setInstallments] = useState<number[]>([]);
+    const [error, setError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
     const [contrat, setContrat] = useState<dataSimulationContract>({
         idClient: "", 
         bankBilletType: "", 
@@ -18,64 +24,72 @@ export default function GenerateCreditOptions({ send, simulationData }: GiveBole
         QuantityInstallments: ""
     });
 
-    const [installments, setInstallments] = useState<number[]>([]);
-    
     const handleChanger = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setContrat((c : dataSimulationContract) => {
-            const object : any = {...c, [name] : value};
-
-            if(name === "price"){
-                object.quantityInstallments = ""
-            }
-
-            return (object);
-        });
+        setContrat((c : dataSimulationContract) => (
+            {...c, [name] : value}
+        ));
 
     };
+    
 
-    const quantityInstallment = Number(contrat?.QuantityInstallments);
+    const handleSubmit = (e: React.SubmitEvent) => {
+        try {
+            e.preventDefault();
+            setLoading(true);
 
-    const defineInstallments = () => {
-        if(quantityInstallment && quantityInstallment > 0){
-            const arrayInstallments : number[] = [];
-
-            for(let i = 0; i < quantityInstallment; i++){
-                arrayInstallments.push(i + 1);
+            if((contrat?.price && preData?.maxLoan) && Number(contrat?.price) > preData?.maxLoan){
+                popPopUp(`Max price for client loan is R$: ${preData?.maxLoan || 0} ` );
+                return null;
             }
 
-            setInstallments(arrayInstallments);
+            send(contrat);
+        } 
+        catch (error : any) {
+            popPopUp(`${error?.message}` );
+        } 
+        
+        finally{
+            setLoading(false)
         }
     }
 
-    console.log("simulation data", simulationData);
+    //popUp function
+    const popPopUp = (message : string) => {
+        setError(true);
+        setErrorMessage(message)
+    }
+
+    const generateInstallments = () => {
+        const array = [];
+        const quantityInstallments = (preData?.quantityInstallments) ? preData?.quantityInstallments : -1;
+
+        for(let i = 0; i < quantityInstallments; i++){
+            array.push(i + 1);
+        }
+
+        setInstallments(array);
+    }
 
     useEffect(() => {
-        defineInstallments();
-    }, [simulationData])
+        generateInstallments();
+    }, [preData])
 
     return (
         <>
             <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    send(contrat);
-                }}
+                onSubmit={handleSubmit}
                 className="mt-10"
             >
-                    <TextField
-                        id="idClient"
-                        label="id Conta"
-                        name="idClient" 
-                        value={contrat.idClient} 
-                        onChange={handleChanger}
-                        type="text"
-                        required
+                    <ClientHeaderData
+                        preData={preData}
+                        contrat={contrat}
+                        handleChanger={handleChanger}
                     />
 
-                    
-                    {/*
-                        <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px', marginTop: '15px'}}>
+                    {preData !== null && (
+                        <>
+                            <Grid container spacing={2} sx={{width: '100%', maxWidth: '600px', marginTop: '15px'}}>
 
                         <Grid size={{xs: 6, md:6}}>
                             <InputLabel id="bankBilletType">
@@ -123,7 +137,7 @@ export default function GenerateCreditOptions({ send, simulationData }: GiveBole
                         }}
                     >
                          <Grid sx={{sm: 6, md: 6}}>
-                            {contrat?.QuantityInstallments != null  && installments.length > 0 &&(
+                            {preData?.quantityInstallments > 0 &&(
                                 <>
                                     <InputLabel>Installments</InputLabel>
                                     <Select
@@ -151,8 +165,8 @@ export default function GenerateCreditOptions({ send, simulationData }: GiveBole
                     
                         </Grid>
                     </Grid>
-                    */}
-
+                        </>
+                    )}
         
                     <Button 
                         variant="contained" 
@@ -166,6 +180,14 @@ export default function GenerateCreditOptions({ send, simulationData }: GiveBole
                         Create
                     </Button>
             </form>
+
+
+            <ErrorPopUp
+                error={error}
+                setError={setError}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+            />
         </>
     );
 }

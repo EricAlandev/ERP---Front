@@ -1,12 +1,15 @@
+import type { UserType } from "./UserTypes"
+
 export type BankBillet = {
     clientName: string,
     value: string,
     date: string
 }
 
-export type preLimits = {
+export type preLimits = UserType & {
     maxLoan : number,
     quantityInstallments: number
+    user: UserType;
 }
 
 export type dataSimulationContract = {
